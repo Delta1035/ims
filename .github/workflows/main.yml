@@ -5,7 +5,7 @@ on:
 
 jobs:
   install_dependency_job:
-    name: build 
+    name: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -18,7 +18,7 @@ jobs:
           node-version: 14.17.6
           # cache:
           #   "yarn"
-            # cache: "npm"
+          # cache: "npm"
       - name: "show nodejs version"
         run: node -v
       - name: install dependency
@@ -31,7 +31,7 @@ jobs:
         run: npm run build
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
-        with: 
+        with:
           name: dist
           path: ./dist
   build-docker-image:
@@ -40,7 +40,6 @@ jobs:
     needs: install_dependency_job
     runs-on: ubuntu-latest
     steps:
-        
       # docker相关操作
       # 注意 先checkout 再download 上一个job upload artifact
       # checkout 将当前git项目作为当前工作目录
@@ -79,11 +78,10 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          port : ${{ secrets.SSH_PORT}}
+          port: ${{ secrets.SSH_PORT}}
           command: |
             docker ps -a 
             docker rm -f ims
             docker rmi -f 528491526/ims
             docker pull 528491526/ims
             docker run --name ims -p 8088:80 -d 528491526/ims
-
