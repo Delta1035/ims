@@ -5,7 +5,7 @@ on:
 
 jobs:
   install_dependency_job:
-    name: build blog 
+    name: build 
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -32,14 +32,6 @@ jobs:
         with: 
           name: dist
           path: ./dist
-      # - name: ftp-action
-      #   uses: sebastianpopp/ftp-action@v2.0.0
-      #   with:
-      #     host: ${{secrets.HOST}}
-      #     user: ${{secrets.USER}}
-      #     password: ${{secrets.PASSWORD}}
-      #     localDir: "dist"
-      #     remoteDir: "react-blog"
   build-docker-image:
     name: build docker image
     # 获取install_dependency_job 缓存的工件
@@ -77,7 +69,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: 528491526/blog:latest
+          tags: 528491526/${{PROJECT_NAME}}:latest
       # 登录部署服务器 拉取镜像并运行
       - name: executing remote ssh commands using password
         uses: garygrossgarten/github-action-ssh@release
@@ -88,8 +80,8 @@ jobs:
           port : ${{ secrets.SSH_PORT}}
           command: |
             docker ps -a 
-            docker rm -f blog
-            docker rmi -f 528491526/blog
-            docker pull 528491526/blog
-            docker run --name blog -p 8084:80 -d 528491526/blog
+            docker rm -f ${{PROJECT_NAME}}
+            docker rmi -f 528491526/${{PROJECT_NAME}}
+            docker pull 528491526/${{PROJECT_NAME}}
+            docker run --name ${{PROJECT_NAME}} -p 8084:80 -d 528491526/${{PROJECT_NAME}}
 

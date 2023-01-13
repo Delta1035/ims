@@ -2,7 +2,7 @@
  * @Author: Delta_Zheng Delta_Zheng@wistronits.com
  * @Date: 2023-01-10 13:33:01
  * @LastEditors: Delta_Zheng Delta_Zheng@wistronits.com
- * @LastEditTime: 2023-01-13 10:21:03
+ * @LastEditTime: 2023-01-13 10:46:53
  * @FilePath: \ims\src\router.tsx
  * @Description:
  *
@@ -10,6 +10,7 @@
 import React from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import Home from "./pages/home";
+
 
 // import About from "./components/about";
 // import ErrorPage from "./components/error.page";
