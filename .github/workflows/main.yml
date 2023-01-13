@@ -69,7 +69,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: 528491526/${{PROJECT_NAME}}:latest
+          tags: 528491526/ims:latest
       # 登录部署服务器 拉取镜像并运行
       - name: executing remote ssh commands using password
         uses: garygrossgarten/github-action-ssh@release
@@ -80,8 +80,8 @@ jobs:
           port : ${{ secrets.SSH_PORT}}
           command: |
             docker ps -a 
-            docker rm -f ${{PROJECT_NAME}}
-            docker rmi -f 528491526/${{PROJECT_NAME}}
-            docker pull 528491526/${{PROJECT_NAME}}
-            docker run --name ${{PROJECT_NAME}} -p 8084:80 -d 528491526/${{PROJECT_NAME}}
+            docker rm -f ims
+            docker rmi -f 528491526/ims
+            docker pull 528491526/ims
+            docker run --name ims -p 8088:80 -d 528491526/ims
 
